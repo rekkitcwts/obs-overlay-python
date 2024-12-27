@@ -14,3 +14,6 @@ Loads talking PNGTuber avatar
 @app.route('/pngtuber')
 def pngtuber_avatar():
     return render_template('pngtuber.html', title="PNGTuber Avatar")
+
+if __name__ == "__main__": 
+    app.run()
