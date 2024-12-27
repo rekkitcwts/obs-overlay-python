@@ -24,7 +24,7 @@
 .styleNeutral {
     transform: translateY(20px);
     filter: brightness(1.0);
-    background: url("{{ url_for('static', filename='struct-close.png') }}");
+    background: url('struct-close.png');
 }
 
 /****************************************************************
