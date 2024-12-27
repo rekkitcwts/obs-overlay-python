@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        #tuberdivroot {
+            position: absolute;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%, 0%);
+        }
+    
+        body {
+            overflow:hidden;
+        }
+    
+        #preloader {
+            display: none;
+            width: 580px;
+            height: 630px;
+        }
+    </style>
+    <script type="text/javascript" src="{{ url_for('static', filename='pngtuber/pngtube.js') }}"></script>
+</head>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='pngtuber/style.css') }}">
+
+<body>
+    <div id="tuberdivroot">
+        <div id="tuberdiv" class="styleNeutral">
+        </div>
+    </div>
+</body>
