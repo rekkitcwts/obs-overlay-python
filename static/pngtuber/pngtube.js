@@ -12,6 +12,7 @@ var blinkStateDuration = 1000;
 var canBlink = false;
 var isBlinking = false;
 var initialized = false;
+var device_id;
 
 window.onload = async () => {
     const tuberDiv = document.getElementById('tuberdiv');
@@ -44,8 +45,27 @@ window.onload = async () => {
 
     const img = document.getElementById('image');
 
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio) (Bluetooth)";
+    navigator.mediaDevices.enumerateDevices()
+    .then(devices => {
+        devices.forEach(device => {
+            if (device.kind === 'audioinput') {
+                console.log(`${device.label}: ${device.deviceId}`);
+                if (device.label == dedicated_microphone) {
+                    console.log(device.deviceId);
+                    device_id = device.deviceId
+                }
+            }
+        });
+    });
+
+    //const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: { deviceId: device_id ? { exact: deviceId } : undefined }, 
+        video: false  
+    });
+    
     const audioContext = new AudioContext();
     const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
     const analyserNode = audioContext.createAnalyser();
