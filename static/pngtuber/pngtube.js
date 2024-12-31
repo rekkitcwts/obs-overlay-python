@@ -61,7 +61,7 @@ window.onload = async () => {
             let sumSquares = 0.0;
             for (const amplitude of pcmData) { sumSquares += amplitude*amplitude; }
             volume = Math.sqrt(sumSquares / pcmData.length);
-            console.log(volume);
+            //console.log(volume);
             //1:1 movement with threshold
             // if (volume > minVolumeThreshold) {
             //     tuberDiv.style.transform = "translateY(-"+ volume * maxHeight +"px)";
