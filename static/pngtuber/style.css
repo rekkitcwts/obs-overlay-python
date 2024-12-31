@@ -48,11 +48,11 @@
 - When setting the duration, take note that the last "frame" lasts significantly shorter than the other "frames". You have to add time in --blink-duration
 - Steps is the number of frames minus 1
 - to {background-position-x} should be the negative width of the spritesheet plus the width of one "frame"*/
-/*.styleBlink {
-    width: 580px;
-    height: 630px;
+.styleBlink {
+    width: 750px;
+    height: 1000px;
     transform: translateY(20px);
-    background: url('testgirl_blink_spritesheet.png');
+    background: url('struct-blink.png');
     background-position-x: 0px;
     animation: flipbook 0.5s steps(5, end) 1;
     animation-fill-mode: forwards;
@@ -62,10 +62,10 @@
         background-position-x: 0px;
     }
     to {
-        background-position-x: calc(-3480px + 580px); 
+        background-position-x: calc(-4500px + 750px); 
     }
 }
-*/
+
 
 /****************************************************************
 *  Sample soft volume states
