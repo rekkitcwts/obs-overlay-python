@@ -85,27 +85,22 @@ navigator.mediaDevices.enumerateDevices()
     .then(stream => {
         console.log("Audio stream successfully started.");
         // Attach the stream to your application logic here
-    })
-    .catch(error => {
-        console.error("Error accessing audio devices:", error);
-    });
+        const audioContext = new AudioContext();
+        const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
+        const analyserNode = audioContext.createAnalyser();
+        
+        mediaStreamAudioSourceNode.connect(analyserNode);
 
-    
-    const audioContext = new AudioContext();
-    const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
-    const analyserNode = audioContext.createAnalyser();
-    mediaStreamAudioSourceNode.connect(analyserNode);
+        const pcmData = new Float32Array(analyserNode.fftSize);
 
-    const pcmData = new Float32Array(analyserNode.fftSize);
+        startBlinkTimer();
 
-    startBlinkTimer();
-
-    const onFrame = () => {
-        if(initialized){
-            analyserNode.getFloatTimeDomainData(pcmData);
-            let sumSquares = 0.0;
-            for (const amplitude of pcmData) { sumSquares += amplitude*amplitude; }
-            volume = Math.sqrt(sumSquares / pcmData.length);
+        const onFrame = () => {
+            if(initialized){
+                analyserNode.getFloatTimeDomainData(pcmData);
+                let sumSquares = 0.0;
+                for (const amplitude of pcmData) { sumSquares += amplitude*amplitude; }
+                volume = Math.sqrt(sumSquares / pcmData.length);
             //console.log(volume);
             //1:1 movement with threshold
             // if (volume > minVolumeThreshold) {
@@ -118,40 +113,45 @@ navigator.mediaDevices.enumerateDevices()
             // tuberDiv.style.transform = "translateY(-"+ volume * maxHeight +"px)";
 
             //Styled movement with threshold
-            if (volume > mediumVolumeThreshold) {
-                if(tuberDiv.className != "styleVolumeMedium") {
-                    //TODO: Pick random classes
-                    tuberDiv.className = "styleVolumeMedium";
-                }
-            } else if (volume > softVolumeThreshold) {
-                if(tuberDiv.className != "styleVolumeSoft") {
-                    tuberDiv.className = "styleVolumeSoft";
-                }
-            } else {
-                if (canBlink) {
-                    canBlink = false;
-                    if (tuberDiv.className != "styleBlink") {
-                        tuberDiv.className = "styleBlink";
-                        isBlinking = true;
-                        //We don't know how long the blink state is. Let's just assume it's going to be at most 1000ms
-                        setTimeout( () => {
-                            if(volume < softVolumeThreshold) {
-                                tuberDiv.className = "styleNeutral";
-                            }
-                            
-                            isBlinking = false;
-                        }, blinkStateDuration);
+                if (volume > mediumVolumeThreshold) {
+                    if(tuberDiv.className != "styleVolumeMedium") {
+                        //TODO: Pick random classes
+                        tuberDiv.className = "styleVolumeMedium";
                     }
-                } else { 
-                    if(tuberDiv.className != "styleNeutral" && !isBlinking) {
-                        tuberDiv.className = "styleNeutral";
+                } else if (volume > softVolumeThreshold) {
+                    if(tuberDiv.className != "styleVolumeSoft") {
+                        tuberDiv.className = "styleVolumeSoft";
+                    }
+                } else {
+                    if (canBlink) {
+                        canBlink = false;
+                        if (tuberDiv.className != "styleBlink") {
+                            tuberDiv.className = "styleBlink";
+                            isBlinking = true;
+                        //We don't know how long the blink state is. Let's just assume it's going to be at most 1000ms
+                            setTimeout( () => {
+                                if(volume < softVolumeThreshold) {
+                                    tuberDiv.className = "styleNeutral";
+                                }
+                            
+                                isBlinking = false;
+                            }, blinkStateDuration);
+                        }
+                    } else { 
+                        if(tuberDiv.className != "styleNeutral" && !isBlinking) {
+                            tuberDiv.className = "styleNeutral";
+                        }
                     }
                 }
             }
-        }
+            window.requestAnimationFrame(onFrame);
+        };
         window.requestAnimationFrame(onFrame);
-    };
-    window.requestAnimationFrame(onFrame);
+    })
+    .catch(error => {
+        console.error("Error accessing audio devices:", error);
+    });
+    
 };
 
 //This method has a timer that runs a random amount of time and checks if the avatar can blink.
