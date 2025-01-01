@@ -4,15 +4,16 @@ window.onload = async () => {
     const debuginfo = document.getElementById('devicesList');
     
     navigator.mediaDevices.enumerateDevices().then(devices => {
+        let devicesList = ""; // Separate variable for accumulating device info
         devices.forEach(device => {
-            //if (device.kind === 'audioinput') {
+            // Log device information to the console
             console.log(`${device.label}: ${device.deviceId}`);
-            devices = devices + `${device.label}: ${device.deviceId}` + "\n";
-            //}
+            // Append device information to the devicesList string
+            devicesList += `${device.label}: ${device.deviceId}<br>`;
         });
+        // Set the accumulated string as the innerHTML of the <p> tag
+        debuginfo.innerHTML = devicesList;
     });
-    
-    debuginfo.innerHTML = devices;
     
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     
