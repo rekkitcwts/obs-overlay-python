@@ -12,7 +12,7 @@ window.onload = async () => {
         });
     });
     
-    debuginfo..innerHTML = devices;
+    debuginfo.innerHTML = devices;
     
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     
