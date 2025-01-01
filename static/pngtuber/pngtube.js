@@ -53,7 +53,7 @@ window.onload = async () => {
                 console.log(`${device.label}: ${device.deviceId}`);
                 if (device.label == dedicated_microphone) {
                     console.log(device.deviceId);
-                    device_id = device.deviceId
+                    device_id = device.deviceId;
                 }
             }
         });
