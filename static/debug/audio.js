@@ -13,4 +13,13 @@ window.onload = async () => {
     });
     
     debuginfo.innerText = devices;
+    
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    
+    const audioContext = new AudioContext();
+    const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
+    const analyserNode = audioContext.createAnalyser();
+    mediaStreamAudioSourceNode.connect(analyserNode);
+
+    const pcmData = new Float32Array(analyserNode.fftSize);
 };
