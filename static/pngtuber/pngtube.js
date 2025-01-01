@@ -45,26 +45,51 @@ window.onload = async () => {
 
     const img = document.getElementById('image');
 
-    const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio) (Bluetooth)";
-    navigator.mediaDevices.enumerateDevices()
+    // Specify the devices to prioritize and avoid
+const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio) (Bluetooth)";
+const avoid_device = "Digital Audio Interface (USB Digital Audio) (534d:2109)";
+
+let device_id = null;
+
+// Enumerate devices and filter based on the criteria
+navigator.mediaDevices.enumerateDevices()
     .then(devices => {
         devices.forEach(device => {
             if (device.kind === 'audioinput') {
                 console.log(`${device.label}: ${device.deviceId}`);
-                if (device.label == dedicated_microphone) {
-                    console.log(device.deviceId);
+
+                // Skip the device if it matches the one to avoid
+                if (device.label === avoid_device) {
+                    console.log(`Skipping: ${device.label}`);
+                    return;
+                }
+
+                // Match the dedicated microphone or fallback to the first available
+                if (device.label === dedicated_microphone) {
+                    console.log(`Using dedicated microphone: ${device.label}`);
+                    device_id = device.deviceId;
+                } else if (!device_id) {
+                    // Set the first valid device as a fallback
+                    console.log(`Fallback device: ${device.label}`);
                     device_id = device.deviceId;
                 }
             }
         });
+
+        // Request user media with the chosen device
+        return navigator.mediaDevices.getUserMedia({
+            audio: { deviceId: device_id ? { exact: device_id } : undefined },
+            video: false
+        });
+    })
+    .then(stream => {
+        console.log("Audio stream successfully started.");
+        // Attach the stream to your application logic here
+    })
+    .catch(error => {
+        console.error("Error accessing audio devices:", error);
     });
 
-    //const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-        audio: { deviceId: device_id ? { exact: deviceId } : undefined }, 
-        video: false  
-    });
     
     const audioContext = new AudioContext();
     const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
