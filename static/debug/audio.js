@@ -5,14 +5,14 @@ window.onload = async () => {
     
     navigator.mediaDevices.enumerateDevices().then(devices => {
         devices.forEach(device => {
-            if (device.kind === 'audioinput') {
-                console.log(`${device.label}: ${device.deviceId}`);
-                devices = devices + `${device.label}: ${device.deviceId}` + "\n";
-            }
+            //if (device.kind === 'audioinput') {
+            console.log(`${device.label}: ${device.deviceId}`);
+            devices = devices + `${device.label}: ${device.deviceId}` + "\n";
+            //}
         });
     });
     
-    debuginfo.innerText = devices;
+    debuginfo..innerHTML = devices;
     
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     
