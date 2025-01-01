@@ -3,8 +3,7 @@ var devices = "";
 window.onload = async () => {
     const debuginfo = document.getElementById('devicesList');
     
-    navigator.mediaDevices.enumerateDevices()
-    .then(devices => {
+    navigator.mediaDevices.enumerateDevices().then(devices => {
         devices.forEach(device => {
             if (device.kind === 'audioinput') {
                 console.log(`${device.label}: ${device.deviceId}`);
@@ -14,4 +13,4 @@ window.onload = async () => {
     });
     
     debuginfo.innerText = devices;
-}
+};
