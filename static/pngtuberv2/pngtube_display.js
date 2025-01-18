@@ -85,7 +85,7 @@ window.onload = async () => {
 };
 
 function fetchVolumeData() {
-    fetch('/pngtuber/v2/get-pngtuber-attrs')
+    fetch(`/pngtuber/v2/get-pngtuber-attrs?timestamp=${new Date().getTime()}`)
         .then(response => response.json())
         .then(data => {
             console.log('Received volume:', data.volume);
