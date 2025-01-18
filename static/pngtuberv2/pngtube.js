@@ -107,7 +107,7 @@ navigator.mediaDevices.enumerateDevices()
                 console.log(volume);
 
             //Styled movement with threshold
-                if (volume > mediumVolumeThreshold) {
+                /*if (volume > mediumVolumeThreshold) {
                     if(tuberDiv.className != "styleVolumeMedium") {
                         //TODO: Pick random classes
                         tuberDiv.className = "styleVolumeMedium";
@@ -136,7 +136,7 @@ navigator.mediaDevices.enumerateDevices()
                             tuberDiv.className = "styleNeutral";
                         }
                     }
-                }
+                } */
             }
             window.requestAnimationFrame(onFrame);
         };
