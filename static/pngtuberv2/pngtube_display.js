@@ -79,6 +79,7 @@ window.onload = async () => {
                 }
             }
         }
+        window.requestAnimationFrame(onFrame);
     }
     window.requestAnimationFrame(onFrame);
 };
