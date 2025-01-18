@@ -103,7 +103,8 @@ navigator.mediaDevices.enumerateDevices()
                 volume = Math.sqrt(sumSquares / pcmData.length);
 
                 // (AJAX the volume here)
-                debuginfo.innerHTML = volume;
+                //debuginfo.innerHTML = volume;
+                console.log(volume);
 
             //Styled movement with threshold
                 if (volume > mediumVolumeThreshold) {
