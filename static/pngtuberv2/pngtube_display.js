@@ -16,7 +16,9 @@ var device_id;
 
 window.onload = async () => {
     
-    const socket = io('/display'); // Connect to the display namespace
+    const socket = io('https://obs-overlay-python.vercel.app/display', {
+    transports: ['websocket', 'polling']
+}); // Connect to the display namespace
 
     socket.on('connect', () => {
         console.log('Connected to display namespace');
