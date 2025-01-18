@@ -89,9 +89,18 @@ navigator.mediaDevices.enumerateDevices()
                 // (AJAX the volume here)
                 volumeDebugInfo.innerHTML = volume;
                 console.log(volume);
-                if (socket.connected) {
+                /*if (socket.connected) {
                     socket.send({ volume: volume }); // Send volume data
-                }
+                }*/
+                fetch('/../display', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ volume: volume }),
+                }).catch(error => {
+                    console.error('Error sending volume data:', error);
+                });
             }
             window.requestAnimationFrame(onFrame);
         };

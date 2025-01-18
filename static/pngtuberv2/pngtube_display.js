@@ -15,7 +15,7 @@ var initialized = false;
 var device_id;
 
 window.onload = async () => {
-    
+    /*
     const socket = io('https://obs-overlay-python.vercel.app/display', {
     transports: ['websocket', 'polling']
 }); // Connect to the display namespace
@@ -29,5 +29,6 @@ window.onload = async () => {
         // Update your display here
         //const volumeDisplay = document.getElementById('volumeDisplay');
         //volumeDisplay.innerText = `Volume: ${data.volume}`;
-    });
+    });*/
+    
 };
