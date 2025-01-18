@@ -93,7 +93,7 @@ navigator.mediaDevices.enumerateDevices()
 
         const pcmData = new Float32Array(analyserNode.fftSize);
 
-        startBlinkTimer();
+        //startBlinkTimer();
         const volumeDebugInfo = document.getElementById('devicesList');
         const onFrame = () => {
             if(initialized){
