@@ -22,7 +22,7 @@ const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio)
 const avoid_device = "Digital Audio Interface (USB Digital Audio) (534d:2109)";
 
 let device_id = null;
-const socket = io('https://obs-overlay-python.vercel.app/microphone', {
+/*const socket = io('https://obs-overlay-python.vercel.app/microphone', {
     transports: ['websocket', 'polling']
 }); // Connect to the microphone namespace
 
