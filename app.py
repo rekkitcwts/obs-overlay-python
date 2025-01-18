@@ -1,14 +1,6 @@
 from flask import Flask, render_template, jsonify, request
-from flask_socketio import SocketIO
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'I change the thongs two times a day'
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
-
-@socketio.on('message', namespace='/microphone')
-def handle_message(data):
-    print(f"Received WebSocket message: {data}")
-    socketio.emit('volume_update', data, namespace='/display')
 
 '''
 Homepage.
@@ -53,7 +45,7 @@ PNGTuber v2 Function - Display
 The actual PNGTuber that everyone is supposed to see.
 Recommended use: Browser Source in OBS.
 '''
-@app.route('/pngtuber/v2/display')
+@app.route('/pngtuber/v2/display', methods=['POST', 'GET'])
 def pngtuber_v2_display():
     return render_template('pngtuberv2/display.html', title="PNGTuber Microphone")
 
