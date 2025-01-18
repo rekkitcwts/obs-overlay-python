@@ -15,6 +15,7 @@ var initialized = false;
 var device_id;
 
 window.onload = async () => {
+    initialized = true;
 /*    const tuberDiv = document.getElementById('tuberdiv');
     const tuberDivRoot = document.getElementById('tuberdivroot');
     // const initialRootTransform = tuberDivRoot.style;
@@ -105,38 +106,6 @@ navigator.mediaDevices.enumerateDevices()
                 // (AJAX the volume here)
                 volumeDebugInfo.innerHTML = volume;
                 console.log(volume);
-
-            //Styled movement with threshold
-                /*if (volume > mediumVolumeThreshold) {
-                    if(tuberDiv.className != "styleVolumeMedium") {
-                        //TODO: Pick random classes
-                        tuberDiv.className = "styleVolumeMedium";
-                    }
-                } else if (volume > softVolumeThreshold) {
-                    if(tuberDiv.className != "styleVolumeSoft") {
-                        tuberDiv.className = "styleVolumeSoft";
-                    }
-                } else {
-                    if (canBlink) {
-                        canBlink = false;
-                        if (tuberDiv.className != "styleBlink") {
-                            tuberDiv.className = "styleBlink";
-                            isBlinking = true;
-                        //We don't know how long the blink state is. Let's just assume it's going to be at most 1000ms
-                            setTimeout( () => {
-                                if(volume < softVolumeThreshold) {
-                                    tuberDiv.className = "styleNeutral";
-                                }
-                            
-                                isBlinking = false;
-                            }, blinkStateDuration);
-                        }
-                    } else { 
-                        if(tuberDiv.className != "styleNeutral" && !isBlinking) {
-                            tuberDiv.className = "styleNeutral";
-                        }
-                    }
-                } */
             }
             window.requestAnimationFrame(onFrame);
         };
