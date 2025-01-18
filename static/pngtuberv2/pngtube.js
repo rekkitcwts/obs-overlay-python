@@ -92,7 +92,7 @@ navigator.mediaDevices.enumerateDevices()
                 /*if (socket.connected) {
                     socket.send({ volume: volume }); // Send volume data
                 }*/
-                fetch('/pngtuber/v2/display', {
+                fetch('/pngtuber/v2/update-volume', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

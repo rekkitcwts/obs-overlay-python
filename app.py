@@ -1,6 +1,8 @@
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
+current_volume = 0
+current_emotion = 'neutral'
 
 '''
 Homepage.
@@ -17,6 +19,20 @@ Loads talking PNGTuber avatar
 @app.route('/pngtuber')
 def pngtuber_avatar():
     return render_template('pngtuber.html', title="PNGTuber Avatar")
+
+'''
+PNGTuber v2 Helper Functions
+'''
+@app.route('/pngtuber/v2/update-volume', methods=['POST'])
+def update_volume():
+    global current_volume
+    data = request.json
+    current_volume = data.get('volume')
+    return jsonify({'status': 'success', 'volume': current_volume})
+
+@app.route('/pngtuber/v2/get-pngtuber-attrs', methods=['GET'])
+def get_volume():
+    return jsonify({'volume': current_volume, 'emotion': current_emotion})
 
 '''
 PNGTuber v2 Function - Microphone
@@ -45,7 +61,7 @@ PNGTuber v2 Function - Display
 The actual PNGTuber that everyone is supposed to see.
 Recommended use: Browser Source in OBS.
 '''
-@app.route('/pngtuber/v2/display', methods=['POST', 'GET'])
+@app.route('/pngtuber/v2/display', methods=['GET'])
 def pngtuber_v2_display():
     return render_template('pngtuberv2/display.html', title="PNGTuber Microphone")
 

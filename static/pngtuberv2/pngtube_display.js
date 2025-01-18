@@ -15,20 +15,17 @@ var initialized = false;
 var device_id;
 
 window.onload = async () => {
-    /*
-    const socket = io('https://obs-overlay-python.vercel.app/display', {
-    transports: ['websocket', 'polling']
-}); // Connect to the display namespace
-
-    socket.on('connect', () => {
-        console.log('Connected to display namespace');
-    });
-
-    socket.on('volume_update', (data) => {
-        console.log('Volume update received:', data.volume);
-        // Update your display here
-        //const volumeDisplay = document.getElementById('volumeDisplay');
-        //volumeDisplay.innerText = `Volume: ${data.volume}`;
-    });*/
+    fetchVolumeData();
     
 };
+
+function fetchVolumeData() {
+    fetch('/pngtuber/v2/get-pngtuber-attrs')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Received volume:', data.volume);
+        })
+        .catch(error => {
+            console.error('Error fetching volume:', error);
+        });
+}
