@@ -1,6 +1,14 @@
 from flask import Flask, render_template, jsonify, request
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'I change the thongs two times a day'
+socketio = SocketIO(app)
+
+@socketio.on('message', namespace='/microphone')
+def handle_message(data):
+    print(f"Received WebSocket message: {data}")
+    socketio.emit('volume_update', data, namespace='/display')
 
 '''
 Homepage.

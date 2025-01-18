@@ -16,42 +16,23 @@ var device_id;
 
 window.onload = async () => {
     initialized = true;
-/*    const tuberDiv = document.getElementById('tuberdiv');
-    const tuberDivRoot = document.getElementById('tuberdivroot');
-    // const initialRootTransform = tuberDivRoot.style;
-    const initialRootTransform = "translate(-50%, 0%)";
-    console.log(initialRootTransform);
 
-    //Preload images (though there might be a better way than chaining them?)
-    ["styleBlink", "styleVolumeMedium", "styleVolumeSoft", "styleNeutral"].forEach( (c, i) => {
-        tuberDivRoot.style.transform = "translateX(-1000%)"; //This is here so it doesn't visibly go through all states. Using "display: none" defeats the purpose...
-        setTimeout( () => {
-            tuberDiv.className = c;
-            if (i >= 3) {
-                initialized = true;
-                tuberDivRoot.style.transform = initialRootTransform; //This is here so it doesn't visibly go through all states.
-            }
-        }, 70 * i);
-    });
-    
-    //Get settings from style.css:
-    try{
-        blinkTimeOut = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-timeout'));
-        blinkTimeOutFuzziness = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-fuzziness'));
-        blinkStateDuration = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-duration'));
-        softVolumeThreshold = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--soft-volume-threshold'));
-        mediumVolumeThreshold = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--medium-volume-threshold'));
-    } catch {
-    }
-
-    const img = document.getElementById('image');
-*/
     // Specify the devices to prioritize and avoid
 const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio) (Bluetooth)";
 const avoid_device = "Digital Audio Interface (USB Digital Audio) (534d:2109)";
 
 let device_id = null;
+const socket = io('/microphone'); // Connect to the microphone namespace
 
+    socket.on('connect', () => {
+        console.log('Connected to microphone namespace');
+    });
+
+    /*const sendVolume = (volume) => {
+        if (socket.connected) {
+            socket.send({ volume: volume }); // Send volume data
+        }
+    };*/
 // Enumerate devices and filter based on the criteria
 navigator.mediaDevices.enumerateDevices()
     .then(devices => {
@@ -106,6 +87,9 @@ navigator.mediaDevices.enumerateDevices()
                 // (AJAX the volume here)
                 volumeDebugInfo.innerHTML = volume;
                 console.log(volume);
+                if (socket.connected) {
+                    socket.send({ volume: volume }); // Send volume data
+                }
             }
             window.requestAnimationFrame(onFrame);
         };
