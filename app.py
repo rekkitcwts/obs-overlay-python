@@ -55,7 +55,7 @@ Recommended use: Browser Source in OBS.
 '''
 @app.route('/pngtuber/v2/display')
 def pngtuber_v2_display():
-    pass
+    return render_template('pngtuberv2/display.html', title="PNGTuber Microphone")
 
 '''
 DEBUG - checks audio devices
