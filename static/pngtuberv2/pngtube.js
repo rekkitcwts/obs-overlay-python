@@ -15,7 +15,7 @@ var initialized = false;
 var device_id;
 
 window.onload = async () => {
-    const tuberDiv = document.getElementById('tuberdiv');
+/*    const tuberDiv = document.getElementById('tuberdiv');
     const tuberDivRoot = document.getElementById('tuberdivroot');
     // const initialRootTransform = tuberDivRoot.style;
     const initialRootTransform = "translate(-50%, 0%)";
@@ -44,7 +44,7 @@ window.onload = async () => {
     }
 
     const img = document.getElementById('image');
-
+*/
     // Specify the devices to prioritize and avoid
 const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio) (Bluetooth)";
 const avoid_device = "Digital Audio Interface (USB Digital Audio) (534d:2109)";
