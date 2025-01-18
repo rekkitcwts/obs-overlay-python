@@ -34,6 +34,18 @@ window.onload = async () => {
         }, 70 * i);
     });
     
+    //Get settings from style.css:
+    try{
+        blinkTimeOut = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-timeout'));
+        blinkTimeOutFuzziness = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-fuzziness'));
+        blinkStateDuration = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--blink-duration'));
+        softVolumeThreshold = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--soft-volume-threshold'));
+        mediumVolumeThreshold = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--medium-volume-threshold'));
+    } catch {
+    }
+
+    const img = document.getElementById('image');
+    
     const onFrame = () => {
         fetchVolumeData();
         
