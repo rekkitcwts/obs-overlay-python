@@ -48,7 +48,7 @@ window.onload = async () => {
     
     const onFrame = () => {
         fetchVolumeData();
-        
+        console.log("VOLUME IN LOOP: ", volume);
         if (volume > mediumVolumeThreshold) {
             if(tuberDiv.className != "styleVolumeMedium") {
                 //TODO: Pick random classes
