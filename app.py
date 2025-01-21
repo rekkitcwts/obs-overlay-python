@@ -5,9 +5,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I change the thongs two times a day'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', engineio_logger=True)
 
+global_volume = 0
+global_emotion = "Neutral"
+
 @socketio.on('message', namespace='/microphone')
 def handle_message(data):
     print(f"Received WebSocket message: {data}")
+    global_volume = data
     socketio.emit('volume_update', data, namespace='/display')
 
 @socketio.on('connect', namespace='/display')

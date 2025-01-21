@@ -24,7 +24,7 @@ window.onload = async () => {
     });
 
     socket.on('volume_update', (data) => {
-        console.log('Volume update received:', data.volume);
+        console.log('Volume update received:', data);
         const volumeDisplay = document.getElementById('volumeDisplay');
         if (volumeDisplay) {
             volumeDisplay.innerText = `Volume: ${data.volume.toFixed(6)}`;
