@@ -10,9 +10,10 @@ global_emotion = "Neutral"
 
 @socketio.on('message', namespace='/microphone')
 def handle_message(data):
+    global global_volume
     print(f"Received WebSocket message: {data}")
-    global_volume = data
-    socketio.emit('volume_update', data, namespace='/display')
+    global_volume = data.get('volume', 0)  # Extract volume from data
+    socketio.emit('volume_update', {'volume': global_volume}, namespace='/display')
 
 @socketio.on('connect', namespace='/display')
 def on_connect_display():

@@ -60,15 +60,15 @@ window.onload = async () => {
         console.warn('Disconnected from /display namespace');
     });
     
+    socket.on('volume_update', (data) => {
+        console.log('Volume update received:', data.volume);
+        volume = data.volume;
+    });
+    
     // Animate PNGtuber
     startBlinkTimer();
     
     const onFrame = () => {
-        socket.on('volume_update', (data) => {
-            console.log('Volume update received:', data.volume);
-            volume = data.volume;
-        });
-        
         if (volume > mediumVolumeThreshold) {
             if(tuberDiv.className != "styleVolumeMedium") {
                 //TODO: Pick random classes

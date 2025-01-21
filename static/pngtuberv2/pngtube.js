@@ -84,14 +84,10 @@ navigator.mediaDevices.enumerateDevices()
 
                 // (AJAX the volume here)
                 volumeDebugInfo.innerHTML = volume;
-                /*console.log(volume);
-                if (socket.connected) {
-                    socket.send({ volume: volume }); // Send volume data
-                }*/
-                
+
                 const currentTime = Date.now();
                 if (socket.connected && currentTime - lastSentTime > throttleInterval) {
-                    socket.emit('volume_update', { volume: volume }); // Send volume data
+                    socket.emit('volume_update', { volume }); // Send volume data
                     lastSentTime = currentTime;
                 }
             }
