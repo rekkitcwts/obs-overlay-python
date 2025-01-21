@@ -13,6 +13,8 @@ var canBlink = false;
 var isBlinking = false;
 var initialized = false;
 var device_id;
+let lastSentTime = 0;
+const throttleInterval = 100; // Send data every 100ms
 
 window.onload = async () => {
     initialized = true;
@@ -29,11 +31,6 @@ const socket = io('wss://obs-overlay-python.onrender.com/microphone', { transpor
         console.log('Connected to microphone namespace');
     });
 
-    /*const sendVolume = (volume) => {
-        if (socket.connected) {
-            socket.send({ volume: volume }); // Send volume data
-        }
-    };*/
 // Enumerate devices and filter based on the criteria
 navigator.mediaDevices.enumerateDevices()
     .then(devices => {
@@ -87,9 +84,15 @@ navigator.mediaDevices.enumerateDevices()
 
                 // (AJAX the volume here)
                 volumeDebugInfo.innerHTML = volume;
-                console.log(volume);
+                /*console.log(volume);
                 if (socket.connected) {
                     socket.send({ volume: volume }); // Send volume data
+                }*/
+                
+                const currentTime = Date.now();
+                if (socket.connected && currentTime - lastSentTime > throttleInterval) {
+                    socket.send({ volume: volume }); // Send volume data
+                    lastSentTime = currentTime;
                 }
             }
             window.requestAnimationFrame(onFrame);
