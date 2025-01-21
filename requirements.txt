@@ -2,3 +2,4 @@ flask
 flask-socketio
 Gunicorn
 eventlet
+gevent>=1.4
