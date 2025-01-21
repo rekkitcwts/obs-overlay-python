@@ -22,7 +22,8 @@ const dedicated_microphone = "Headset (联想thinkplus-TH20 Hands-Free AG Audio)
 const avoid_device = "Digital Audio Interface (USB Digital Audio) (534d:2109)";
 
 let device_id = null;
-const socket = io('/microphone'); // Connect to the microphone namespace
+//const socket = io('/microphone'); // Connect to the microphone namespace
+const socket = io('wss://obs-overlay-python.onrender.com/microphone', { transports: ['websocket'] });
 
     socket.on('connect', () => {
         console.log('Connected to microphone namespace');
