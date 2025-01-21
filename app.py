@@ -10,6 +10,14 @@ def handle_message(data):
     print(f"Received WebSocket message: {data}")
     socketio.emit('volume_update', data, namespace='/display')
 
+@socketio.on('connect', namespace='/display')
+def on_connect_display():
+    print('Client connected to /display namespace')
+
+@socketio.on('disconnect', namespace='/display')
+def on_disconnect_display():
+    print('Client disconnected from /display namespace')
+
 '''
 Homepage.
 Self explanatory.
