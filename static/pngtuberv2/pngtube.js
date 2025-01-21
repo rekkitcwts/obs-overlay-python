@@ -91,7 +91,7 @@ navigator.mediaDevices.enumerateDevices()
                 
                 const currentTime = Date.now();
                 if (socket.connected && currentTime - lastSentTime > throttleInterval) {
-                    socket.send({ volume: volume }); // Send volume data
+                    socket.emit('volume_update', { volume: volume }); // Send volume data
                     lastSentTime = currentTime;
                 }
             }
