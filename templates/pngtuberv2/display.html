@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <head>
+    <style>
+        #tuberdivroot {
+            position: absolute;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%, 0%);
+        }
+    
+        body {
+            overflow:hidden;
+        }
+    
+        #preloader {
+            display: none;
+            width: 580px;
+            height: 630px;
+        }
+    </style>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='pngtuberv2/pngtube_display.js') }}"></script>
 </head>
 
 
-<!--<link rel="stylesheet" href="{{ url_for('static', filename='pngtuber/style.css') }}">-->
+<link rel="stylesheet" href="{{ url_for('static', filename='pngtuber/style.css') }}">
 
 <body>
     <div id="tuberdivroot">

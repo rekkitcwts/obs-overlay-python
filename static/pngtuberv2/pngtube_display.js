@@ -20,14 +20,18 @@ window.onload = async () => {
     const socket = io('wss://obs-overlay-python.onrender.com/display', { transports: ['websocket'] }); // Connect to the display namespace
 
     socket.on('connect', () => {
-        console.log('Connected to display namespace');
+        console.log('Connected to /display namespace');
     });
 
     socket.on('volume_update', (data) => {
-        console.log('Volume update received:', data);
-        const volumeDisplay = document.getElementById('volumeDisplay');
-        if (volumeDisplay) {
-            volumeDisplay.innerText = `Volume: ${data.volume.toFixed(6)}`;
-        }
+        console.log('Volume update received:', data.volume);
+    });
+
+    socket.on('connect_error', (err) => {
+        console.error('Connection error:', err.message);
+    });
+
+    socket.on('disconnect', () => {
+        console.warn('Disconnected from /display namespace');
     });
 };
