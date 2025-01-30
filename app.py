@@ -8,11 +8,11 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', engineio
 global_volume = 0
 global_emotion = "Neutral"
 
-@socketio.on('message', namespace='/microphone')
-def handle_message(data):
+@socketio.on('volume_update', namespace='/microphone')  # Changed from 'message' to 'volume_update'
+def handle_volume_update(data):
     global global_volume
-    print(f"Received WebSocket message: {data}")
-    global_volume = data.get('volume', 0)  # Extract volume from data
+    print(f"Received volume update: {data}")
+    global_volume = data.get('volume', 0)
     socketio.emit('volume_update', {'volume': global_volume}, namespace='/display')
 
 @socketio.on('connect', namespace='/display')
