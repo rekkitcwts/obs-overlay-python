@@ -1,9 +1,27 @@
+from gevent import monkey
+monkey.patch_all()
+
 from flask import Flask, render_template, jsonify, request
 from flask_socketio import SocketIO, emit
+import signal
+
+def handle_shutdown(signum, frame):
+    print("Shutting down gracefully...")
+    socketio.stop()
+    exit(0)
+
+signal.signal(signal.SIGTERM, handle_shutdown)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I change the thongs two times a day'
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', engineio_logger=True)
+#socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', engineio_logger=True)
+socketio = SocketIO(
+    app,
+    cors_allowed_origins="*",
+    async_mode='gevent',
+    logger=True,  # Enable detailed logs
+    engineio_logger=True
+)
 
 global_volume = 0
 global_emotion = "Neutral"
@@ -76,3 +94,10 @@ DEBUG - checks audio devices
 @app.route('/debug/audio')
 def debug_audio_devices():
     return render_template('debug_audio.html', title="Audio Devices Debugger")
+
+'''
+Avoid Render autoshutdown
+'''
+@app.route('/health')
+def health_check():
+    return jsonify(status="OK"), 200

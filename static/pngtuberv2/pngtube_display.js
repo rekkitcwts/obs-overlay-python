@@ -56,8 +56,10 @@ window.onload = async () => {
         console.error('Connection error:', err.message);
     });
 
+    // Add automatic reconnection
     socket.on('disconnect', () => {
-        console.warn('Disconnected from /display namespace');
+        console.log('WebSocket disconnected. Reconnecting...');
+        socket.connect();
     });
     
     socket.on('volume_update', (data) => {

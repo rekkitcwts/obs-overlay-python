@@ -30,6 +30,12 @@ const socket = io('wss://obs-overlay-python.onrender.com/microphone', { transpor
     socket.on('connect', () => {
         console.log('Connected to microphone namespace');
     });
+    
+    // Add automatic reconnection
+    socket.on('disconnect', () => {
+        console.log('WebSocket disconnected. Reconnecting...');
+        socket.connect();
+    });
 
 // Enumerate devices and filter based on the criteria
 navigator.mediaDevices.enumerateDevices()
