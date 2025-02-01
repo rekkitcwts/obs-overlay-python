@@ -89,7 +89,7 @@ navigator.mediaDevices.enumerateDevices()
                 volume = Math.sqrt(sumSquares / pcmData.length);
 
                 // (AJAX the volume here)
-                volumeDebugInfo.innerHTML = volume;
+                updateVolumeBar(volume)
 
                 const currentTime = Date.now();
                 if (socket.connected && currentTime - lastSentTime > throttleInterval) {
@@ -116,3 +116,29 @@ function startBlinkTimer() {
         startBlinkTimer();
     }, duration)
 }
+
+// Update volume bar in pngtube.js
+function updateVolumeBar(volume) {
+    const volumeBar = document.querySelector('.volume-bar');
+        if (!volumeBar) return;
+
+        // Update width
+        const percentage = Math.min(volume * 100, 100);
+        volumeBar.style.width = `${percentage}%`;
+
+        // Update color based on volume
+        if (volume > 0.1) {
+            volumeBar.classList.add('bg-danger');
+                volumeBar.classList.remove('bg-warning', 'bg-success');
+            } else if (volume > 0.03) {
+                volumeBar.classList.add('bg-warning');
+                volumeBar.classList.remove('bg-danger', 'bg-success');
+            } else {
+                volumeBar.classList.add('bg-success');
+                volumeBar.classList.remove('bg-danger', 'bg-warning');
+            }
+        }
+
+        // Modify your existing volume update code to use this function
+        // Replace the line: volumeDebugInfo.innerHTML = volume;
+        // With: updateVolumeBar(volume);
