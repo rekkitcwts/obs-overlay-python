@@ -6,11 +6,12 @@ A lightweight PNGTuber system for streamers, designed to work with OBS browser s
 
 ## Features
 
-- 🎤 Cross-device microphone input (phone ↔ PC)
-- 🖥️ Browser-based - no local software installation
-- 🚫 No tracking/analytics
-- 🔌 WebSocket-powered real-time sync
-- 📱 Responsive UI for mobile control panels
+- 👄 Phone-to-PC animation sync (mic triggers avatar lip-sync only)  
+- 🖥️ Browser-based - no local software installation  
+- 🚫 No tracking/analytics  
+- 🔌 WebSocket-powered real-time animation  
+- 📱 Mobile-friendly control panel  
+- 🔊 *Note: Requires separate OBS microphone for actual audio*
 
 ## Why Render?
 
