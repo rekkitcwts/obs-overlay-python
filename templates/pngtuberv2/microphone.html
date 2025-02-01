@@ -1,8 +1,105 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNGTuber Controller</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Socket.IO -->
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='pngtuberv2/pngtube.js') }}"></script>
+    <!-- Custom CSS -->
+    <style>
+        .volume-bar {
+            height: 25px;
+            transition: width 0.15s ease-in-out;
+        }
+        .emotion-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .emotion-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+        #volumeContainer {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
-<body>
-    <p id="devicesList"></p>
+<body class="bg-dark text-light min-vh-100">
+    <div class="container py-5">
+        <!-- Volume Indicator Section -->
+        <div class="mb-5" id="volumeContainer">
+            <h3 class="mb-3 text-center">Microphone Volume</h3>
+            <div class="progress bg-secondary" style="height: 30px;">
+                <div class="volume-bar progress-bar progress-bar-striped" 
+                     role="progressbar" 
+                     aria-valuemin="0" 
+                     aria-valuemax="1"></div>
+            </div>
+        </div>
+
+        <!-- Emotion Grid Section -->
+        <div class="row g-3 justify-content-center" id="emotionGrid">
+            <!-- Neutral -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="emotion-card card bg-dark border-primary">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Neutral</h5>
+                        <p class="card-text text-muted">Default state</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emotion Template (Repeat for each emotion) -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="emotion-card card bg-dark border-secondary">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-info">Happy</h5>
+                        <p class="card-text text-muted">(Coming Soon)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more emotion blocks as needed -->
+        </div>
+
+        <!-- Hidden Debug Info -->
+        <div id="devicesList" class="visually-hidden"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your Custom JS -->
+    <script type="text/javascript" src="{{ url_for('static', filename='pngtuberv2/pngtube.js') }}"></script>
+    <script>
+        // Update volume bar in pngtube.js
+        function updateVolumeBar(volume) {
+            const volumeBar = document.querySelector('.volume-bar');
+            if (!volumeBar) return;
+
+            // Update width
+            const percentage = Math.min(volume * 100, 100);
+            volumeBar.style.width = `${percentage}%`;
+
+            // Update color based on volume
+            if (volume > 0.1) {
+                volumeBar.classList.add('bg-danger');
+                volumeBar.classList.remove('bg-warning', 'bg-success');
+            } else if (volume > 0.03) {
+                volumeBar.classList.add('bg-warning');
+                volumeBar.classList.remove('bg-danger', 'bg-success');
+            } else {
+                volumeBar.classList.add('bg-success');
+                volumeBar.classList.remove('bg-danger', 'bg-warning');
+            }
+        }
+
+        // Modify your existing volume update code to use this function
+        // Replace the line: volumeDebugInfo.innerHTML = volume;
+        // With: updateVolumeBar(volume);
+    </script>
 </body>
+</html>
