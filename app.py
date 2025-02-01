@@ -85,8 +85,8 @@ Recommended use: Browser Source in OBS.
 '''
 @app.route('/pngtuber/v2/display')
 def pngtuber_v2_display():
-    # return render_template('pngtuberv2/display.html', title="PNGTuber Display")
-    return render_template('pngtuberv2/debug_minimal_display.html', title="PNGTuber Display")
+    return render_template('pngtuberv2/display.html', title="PNGTuber Display")
+    # return render_template('pngtuberv2/debug_minimal_display.html', title="PNGTuber Display")
 
 '''
 DEBUG - checks audio devices
