@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+<script>
+  const socket = io('wss://obs-overlay-python.onrender.com/display');
+  socket.on('volume_update', (data) => {
+    console.log('Volume:', data.volume); // Check browser console
+    document.body.textContent = `Volume: ${data.volume}`;
+  });
+</script>

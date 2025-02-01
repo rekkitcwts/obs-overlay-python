@@ -14,7 +14,6 @@ signal.signal(signal.SIGTERM, handle_shutdown)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'I change the thongs two times a day'
-#socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', engineio_logger=True)
 socketio = SocketIO(
     app,
     cors_allowed_origins="*",
@@ -86,7 +85,8 @@ Recommended use: Browser Source in OBS.
 '''
 @app.route('/pngtuber/v2/display')
 def pngtuber_v2_display():
-    return render_template('pngtuberv2/display.html', title="PNGTuber Microphone")
+    # return render_template('pngtuberv2/display.html', title="PNGTuber Display")
+    return render_template('pngtuberv2/debug_minimal_display.html', title="PNGTuber Display")
 
 '''
 DEBUG - checks audio devices
@@ -96,8 +96,16 @@ def debug_audio_devices():
     return render_template('debug_audio.html', title="Audio Devices Debugger")
 
 '''
-Avoid Render autoshutdown
+INTERNAL - Avoid Render autoshutdown
 '''
 @app.route('/health')
 def health_check():
     return jsonify(status="OK"), 200
+
+'''
+TIMER OVERLAY - For starting and BRB screens
+'''
+@app.route('/countdown')
+def countdown_overlay():
+    pass
+
